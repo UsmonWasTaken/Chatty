@@ -1,6 +1,3 @@
-rootProject.name = "Chatty"
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 pluginManagement {
     repositories {
         google {
@@ -27,5 +24,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
+rootProject.name = "Chatty"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":composeApp")
+include(":android")
+include(":desktop")
