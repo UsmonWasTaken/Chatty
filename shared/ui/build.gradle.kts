@@ -19,12 +19,17 @@ kotlin {
             implementation(projects.feature.profile.impl)
             implementation(projects.feature.settings.impl)
 
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material3)
             implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+            implementation(compose.material3)
+        }
+
+        androidMain.dependencies {
+            api(libs.koin.android)
         }
     }
 }

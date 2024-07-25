@@ -12,6 +12,10 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.feature.onboarding.api)
+
+            api(libs.koin.core)
+
+            implementation(compose.runtime)
         }
     }
 }
