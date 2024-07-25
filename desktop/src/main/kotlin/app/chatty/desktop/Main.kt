@@ -8,9 +8,9 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
 fun main(args: Array<String>) {
-    startKoin {
+    val koinApplication = startKoin {
         modules(UiModule)
-        if ("debug" in args) printLogger(level = Level.DEBUG)
+        if (args.isDebuggableApp) printLogger(level = Level.DEBUG)
     }
 
     application {
@@ -18,7 +18,10 @@ fun main(args: Array<String>) {
             title = "Chatty",
             onCloseRequest = ::exitApplication,
         ) {
-            ContentView()
+            ContentView(koin = koinApplication.koin)
         }
     }
 }
+
+private val Array<String>.isDebuggableApp: Boolean
+    inline get() = contains("debuggable")
