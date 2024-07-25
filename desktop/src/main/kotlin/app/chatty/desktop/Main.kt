@@ -2,14 +2,20 @@ package app.chatty.desktop
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import app.chatty.shared.ui.ContentView
-import app.chatty.shared.ui.di.UiModule
+import app.chatty.core.designsystem.theme.ChattyTheme
+import app.chatty.feature.onboarding.api.welcome.WelcomeScreenFactory
+import app.chatty.feature.onboarding.impl.di.OnboardingModule
+import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
+import org.koin.compose.koinInject
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
+@OptIn(ExperimentalVoyagerApi::class)
 fun main(args: Array<String>) {
-    val koinApplication = startKoin {
-        modules(UiModule)
+    startKoin {
+        modules(OnboardingModule)
         if (args.isDebuggableApp) printLogger(level = Level.DEBUG)
     }
 
@@ -18,7 +24,15 @@ fun main(args: Array<String>) {
             title = "Chatty",
             onCloseRequest = ::exitApplication,
         ) {
-            ContentView(koin = koinApplication.koin)
+            ChattyTheme {
+                val welcomeScreen = koinInject<WelcomeScreenFactory>()
+                Navigator(screen = welcomeScreen.create()) { navigator ->
+                    SlideTransition(
+                        navigator = navigator,
+                        disposeScreenAfterTransitionEnd = true,
+                    )
+                }
+            }
         }
     }
 }

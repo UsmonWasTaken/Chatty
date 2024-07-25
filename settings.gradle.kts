@@ -27,8 +27,13 @@ dependencyResolutionManagement {
 rootProject.name = "Chatty"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include(":shared:ui")
-include(":shared:designsystem")
+include(":core:common")
+include(":core:domain")
+include(":core:data")
+include(":core:network")
+include(":core:database")
+include(":core:datastore")
+include(":core:designsystem")
 
 include(":feature:onboarding:api")
 include(":feature:onboarding:impl")

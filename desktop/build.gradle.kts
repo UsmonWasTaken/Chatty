@@ -23,6 +23,13 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.shared.ui)
+    implementation(projects.core.designsystem)
+
+    implementation(projects.feature.onboarding.impl)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.voyager.navigator)
+    implementation(libs.voyager.transitions)
     implementation(compose.desktop.currentOs)
 }

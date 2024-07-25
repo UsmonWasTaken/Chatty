@@ -53,10 +53,14 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.shared.ui)
+    implementation(projects.core.designsystem)
+
+    implementation(projects.feature.onboarding.impl)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.splashscreen)
-    implementation(compose.preview)
-    debugImplementation(compose.uiTooling)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.voyager.navigator)
+    implementation(libs.voyager.transitions)
 }
