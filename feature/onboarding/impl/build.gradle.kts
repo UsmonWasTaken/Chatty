@@ -11,16 +11,14 @@ kotlin {
     jvmToolchain(11)
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.foundation)
-            implementation(compose.ui)
-            implementation(compose.runtime)
-            implementation(compose.material3)
+            api(projects.feature.onboarding.api)
         }
     }
 }
 
 android {
-    namespace = "app.chatty.shared.designsystem"
+    namespace = "app.chatty.feature.onboarding.impl"
     compileSdk = 34
     defaultConfig.minSdk = 21
+    buildFeatures.compose = true
 }

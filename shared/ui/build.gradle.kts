@@ -8,10 +8,16 @@ plugins {
 kotlin {
     androidTarget()
     jvm()
-
+    jvmToolchain(11)
     sourceSets {
         commonMain.dependencies {
             implementation(projects.shared.designsystem)
+
+            implementation(projects.feature.auth.impl)
+            implementation(projects.feature.onboarding.impl)
+            implementation(projects.feature.overview.impl)
+            implementation(projects.feature.profile.impl)
+            implementation(projects.feature.settings.impl)
 
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -21,12 +27,11 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
         }
     }
-
-    jvmToolchain(11)
 }
 
 android {
     namespace = "app.chatty.shared.ui"
     compileSdk = 34
     defaultConfig.minSdk = 21
+    buildFeatures.compose = true
 }
