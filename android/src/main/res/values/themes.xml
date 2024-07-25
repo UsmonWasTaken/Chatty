@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Note: Apparently we could use android:attr/isLightTheme, but in some devices it's not working as expected -->
+    <style name="NightAdjusted.Theme.Chatty.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
+
+    <style name="Theme.Chatty.Splash" parent="NightAdjusted.Theme.Chatty.Splash">
+        <item name="postSplashScreenTheme">@style/Theme.Chatty</item>
+    </style>
+
+    <style name="NightAdjusted.Theme.Chatty" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
+
+    <style name="Theme.Chatty" parent="NightAdjusted.Theme.Chatty" />
+</resources>
