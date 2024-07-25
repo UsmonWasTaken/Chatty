@@ -26,6 +26,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Chatty"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+include(":shared:ui")
+include(":shared:designsystem")
+
 include(":android")
 include(":desktop")
-include(":shared")

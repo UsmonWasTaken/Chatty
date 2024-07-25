@@ -23,6 +23,6 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.shared)
+    implementation(projects.shared.ui)
     implementation(compose.desktop.currentOs)
 }
