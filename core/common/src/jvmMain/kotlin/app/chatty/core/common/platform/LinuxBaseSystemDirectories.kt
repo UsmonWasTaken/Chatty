@@ -14,11 +14,9 @@ internal class LinuxBaseSystemDirectories : BaseSystemDirectories {
         get() = linuxCacheDir()
 
     private fun linuxConfigDir(): File {
-        val configDirPath = System.getenv("XDG_CONFIG_HOME")?.ifBlank {
-            System.getenv("HOME")?.let { "$it/.config" }
-        }
+        val configDirPath = System.getenv("XDG_CONFIG_HOME") ?: System.getenv("HOME")?.let { "$it/.config" }
         checkNotNull(configDirPath) {
-            "This application requires access to your user config directory. Please ensure that either the '\$XDG_CONFIG_HOME' or '\$HOME' environment variable is set in your system configuration."
+            "This application requires access to your user config directory. Please ensure that either the '\$XDG_CONFIG_HOME' or '\$HOME' environment variable is set properly in your system configuration."
         }
         val configDir = File(configDirPath)
         check(configDir.canRead() && configDir.canWrite()) {
@@ -38,11 +36,9 @@ internal class LinuxBaseSystemDirectories : BaseSystemDirectories {
     }
 
     private fun linuxDataDir(): File {
-        val dataDirPath = System.getenv("XDG_DATA_HOME")?.ifBlank {
-            System.getenv("HOME")?.let { "$it/.local/share" }
-        }
+        val dataDirPath = System.getenv("XDG_DATA_HOME") ?: System.getenv("HOME")?.let { "$it/.local/share" }
         checkNotNull(dataDirPath) {
-            "This application requires access to your user data directory. Please ensure that either the '\$XDG_DATA_HOME' or '\$HOME' environment variable is set in your system configuration."
+            "This application requires access to your user data directory. Please ensure that either the '\$XDG_DATA_HOME' or '\$HOME' environment variable is set properly in your system configuration."
         }
         val dataDir = File(dataDirPath)
         check(dataDir.canRead() && dataDir.canWrite()) {
@@ -62,11 +58,9 @@ internal class LinuxBaseSystemDirectories : BaseSystemDirectories {
     }
 
     private fun linuxCacheDir(): File {
-        val cacheDirPath = System.getenv("XDG_CACHE_HOME")?.ifBlank {
-            System.getenv("HOME")?.let { "$it/.cache" }
-        }
+        val cacheDirPath = System.getenv("XDG_CACHE_HOME") ?: System.getenv("HOME")?.let { "$it/.cache" }
         checkNotNull(cacheDirPath) {
-            "This application requires access to your user cache directory. Please ensure that either the '\$XDG_CACHE_HOME' or '\$HOME' environment variable is set in your system configuration."
+            "This application requires access to your user cache directory. Please ensure that either the '\$XDG_CACHE_HOME' or '\$HOME' environment variable is set properly in your system configuration."
         }
         val cacheDir = File(cacheDirPath)
         check(cacheDir.canRead() && cacheDir.canWrite()) {

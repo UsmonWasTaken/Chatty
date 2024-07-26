@@ -7,4 +7,4 @@ val CommonModule = module {
     includes(CommonPlatformModule)
 }
 
-expect val CommonPlatformModule: Module
+internal expect val CommonPlatformModule: Module

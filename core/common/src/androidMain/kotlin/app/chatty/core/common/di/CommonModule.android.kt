@@ -7,6 +7,6 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-actual val CommonPlatformModule: Module = module {
+internal actual val CommonPlatformModule: Module = module {
     singleOf(::AndroidBaseSystemDirectories).bind<BaseSystemDirectories>()
 }

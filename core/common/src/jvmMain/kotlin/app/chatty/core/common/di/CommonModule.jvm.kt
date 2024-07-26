@@ -7,7 +7,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-actual val CommonPlatformModule: Module = module {
+internal actual val CommonPlatformModule: Module = module {
     // Note: The JVM implementation only works on Linux for now.
     singleOf(::LinuxBaseSystemDirectories).bind<BaseSystemDirectories>()
 }
