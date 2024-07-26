@@ -2,6 +2,7 @@ package app.chatty.desktop
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import app.chatty.core.data.di.DataModule
 import app.chatty.core.designsystem.theme.ChattyTheme
 import app.chatty.feature.onboarding.api.welcome.WelcomeScreenFactory
 import app.chatty.feature.onboarding.impl.di.OnboardingModule
@@ -15,7 +16,7 @@ import org.koin.core.logger.Level
 @OptIn(ExperimentalVoyagerApi::class)
 fun main(args: Array<String>) {
     startKoin {
-        modules(OnboardingModule)
+        modules(DataModule, OnboardingModule)
         if (args.isDebuggableApp) printLogger(level = Level.DEBUG)
     }
 

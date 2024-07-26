@@ -55,6 +55,7 @@ kotlin {
 dependencies {
     implementation(projects.core.designsystem)
 
+    implementation(projects.core.data)
     implementation(projects.feature.onboarding.impl)
 
     implementation(libs.androidx.activity.compose)
