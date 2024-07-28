@@ -8,9 +8,7 @@ import app.chatty.core.datastore.serializer.ThemePreferencesSerializer
 import app.chatty.core.domain.model.ThemePreferences
 import java.io.File
 
-// TODO: Consider creating a dedicated UserPreferencesDataStore class for better abstraction
-//  and potential future extensions (e.g., access control).
-typealias ThemePreferencesDataStore = DataStore<ThemePreferences>
+interface ThemePreferencesDataStore : DataStore<ThemePreferences>
 
 internal fun ThemePreferencesDataStore(
     systemDirectories: BaseSystemDirectories,
@@ -21,8 +19,13 @@ internal fun ThemePreferencesDataStore(
             File(systemDirectories.configDir, "theme-preferences.json")
         }
     )
-    return DataStoreFactory.create(
+    val dataStore = DataStoreFactory.create(
         storage = themePreferencesStorage,
     )
+    return ThemePreferencesDataStoreImpl(dataStore)
 }
 
+@JvmInline
+private value class ThemePreferencesDataStoreImpl(
+    val dataStore: DataStore<ThemePreferences>,
+) : ThemePreferencesDataStore, DataStore<ThemePreferences> by dataStore
