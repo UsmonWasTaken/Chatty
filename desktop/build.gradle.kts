@@ -8,7 +8,7 @@ plugins {
 
 compose.desktop {
     application {
-        mainClass = "app.chatty.desktop.MainKt"
+        mainClass = "app.chatty.desktop.Main"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
@@ -23,14 +23,20 @@ kotlin {
 }
 
 dependencies {
+    implementation(projects.core.domain)
     implementation(projects.core.designsystem)
+    implementation(projects.core.ui)
 
+    implementation(projects.feature.onboarding.api)
+    implementation(projects.feature.overview.api)
+
+    // To build dependency graph
     implementation(projects.core.data)
     implementation(projects.feature.onboarding.impl)
+    implementation(projects.feature.overview.impl)
 
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
-    implementation(libs.voyager.navigator)
-    implementation(libs.voyager.transitions)
+    implementation(libs.voyager.core)
     implementation(compose.desktop.currentOs)
 }

@@ -34,6 +34,7 @@ include(":core:network")
 include(":core:database")
 include(":core:datastore")
 include(":core:designsystem")
+include(":core:ui")
 
 include(":feature:onboarding:api")
 include(":feature:onboarding:impl")

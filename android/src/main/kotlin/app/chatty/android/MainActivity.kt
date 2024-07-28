@@ -4,30 +4,30 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import app.chatty.core.designsystem.theme.ChattyTheme
-import app.chatty.feature.onboarding.api.welcome.WelcomeScreenFactory
-import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.transitions.SlideTransition
-import org.koin.compose.koinInject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.compose.KoinContext
 import org.koin.core.context.stopKoin
 
-@OptIn(ExperimentalVoyagerApi::class)
 class MainActivity : ComponentActivity() {
 
+    private val viewModel: MainViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        installSplashScreen().setKeepOnScreenCondition(viewModel::shouldKeepSplashScreen)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         setContent {
-            ChattyTheme {
-                val welcomeScreen = koinInject<WelcomeScreenFactory>()
-                Navigator(screen = welcomeScreen.create()) { navigator ->
-                    SlideTransition(
-                        navigator = navigator,
-                        disposeScreenAfterTransitionEnd = true,
+            val themePreferences by viewModel.themePreferencesFlow.collectAsState()
+            val userPreferences by viewModel.userPreferencesFlow.collectAsState()
+            KoinContext {
+                if (themePreferences != null && userPreferences != null) {
+                    ChattyContent(
+                        themePreferences = checkNotNull(themePreferences),
+                        userPreferences = checkNotNull(userPreferences)
                     )
                 }
             }

@@ -1,42 +1,42 @@
+@file:JvmName("Main")
+
 package app.chatty.desktop
 
-import androidx.compose.ui.window.Window
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.window.application
 import app.chatty.core.data.di.DataModule
-import app.chatty.core.designsystem.theme.ChattyTheme
-import app.chatty.feature.onboarding.api.welcome.WelcomeScreenFactory
+import app.chatty.core.domain.repository.ThemePreferencesRepository
+import app.chatty.core.domain.repository.UserPreferencesRepository
 import app.chatty.feature.onboarding.impl.di.OnboardingModule
-import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.transitions.SlideTransition
-import org.koin.compose.koinInject
+import app.chatty.feature.overview.impl.di.OverviewModule
+import org.koin.compose.KoinContext
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
-@OptIn(ExperimentalVoyagerApi::class)
 fun main(args: Array<String>) {
-    startKoin {
-        modules(DataModule, OnboardingModule)
+    val koin = startKoin {
+        modules(DataModule, OnboardingModule, OverviewModule)
         if (args.isDebuggableApp) printLogger(level = Level.DEBUG)
-    }
+    }.koin
+
+    val themePreferencesFlow = koin.get<ThemePreferencesRepository>().themePreferencesFlow
+    val userPreferencesFlow = koin.get<UserPreferencesRepository>().userPreferencesFlow
 
     application {
-        Window(
-            title = "Chatty",
-            onCloseRequest = ::exitApplication,
-        ) {
-            ChattyTheme {
-                val welcomeScreen = koinInject<WelcomeScreenFactory>()
-                Navigator(screen = welcomeScreen.create()) { navigator ->
-                    SlideTransition(
-                        navigator = navigator,
-                        disposeScreenAfterTransitionEnd = true,
-                    )
-                }
+        val themePreferences by themePreferencesFlow.collectAsState(initial = null)
+        val userPreferences by userPreferencesFlow.collectAsState(initial = null)
+
+        KoinContext(context = koin) {
+            if (themePreferences != null && userPreferences != null) {
+                ChattyWindow(
+                    themePreferences = checkNotNull(themePreferences),
+                    userPreferences = checkNotNull(userPreferences)
+                )
             }
         }
     }
 }
 
 private val Array<String>.isDebuggableApp: Boolean
-    inline get() = contains("debuggable")
+    inline get() = any { it.equals("debuggable", ignoreCase = true) }

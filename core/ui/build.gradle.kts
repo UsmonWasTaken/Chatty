@@ -10,19 +10,24 @@ kotlin {
     jvm()
     jvmToolchain(11)
     sourceSets {
+        all {
+            languageSettings.optIn("cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi")
+        }
         commonMain.dependencies {
-            api(projects.core.domain)
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.transitions)
 
             implementation(compose.foundation)
             implementation(compose.ui)
             implementation(compose.runtime)
             implementation(compose.material3)
+            implementation(compose.animation)
         }
     }
 }
 
 android {
-    namespace = "app.chatty.core.designsystem"
+    namespace = "app.chatty.core.ui"
     compileSdk = 34
     defaultConfig.minSdk = 21
 }
